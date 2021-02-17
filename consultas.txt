@@ -1,0 +1,28 @@
+Lista de precios de los articulos
+SELECT nombre, valor
+FROM dbo.Productos
+ORDER BY nombre ASC;
+
+SELECT nombre, valor, cantidad
+FROM dbo.Productos
+WHERE cantidad < = 5 
+ORDER BY nombre ASC;
+
+
+SELECT c.nombre, DATEDIFF( YEAR , c.fecha_nacimiento , GETDATE()) AS edad
+FROM dbo.clientes as c INNER JOIN dbo.Facturas as f  ON c.id_cliente = f.id_cliente
+WHERE  f.fecha BETWEEN '20000102' AND '20002505' AND DATEDIFF( YEAR , c.fecha_nacimiento , GETDATE())  <= 35
+ORDER BY nombre ASC;
+
+
+SELECT p.nombre , SUM(d.valor_total) AS valorventa
+FROM dbo.Facturas as f  INNER JOIN dbo.DetalleFacturas as d  ON d.id_factura = f.id_factura
+INNER JOIN dbo.Productos as p  ON d.id_producto = p.id_producto
+WHERE  DATEPART(YEAR, f.fecha) = 2000
+GROUP BY p.nombre
+ORDER BY p.nombre asc;
+
+SELECT c.nombre, MAX(f.fecha) AS ulimacompra
+FROM dbo.clientes as c INNER JOIN dbo.Facturas as f  ON c.id_cliente = f.id_cliente
+GROUP BY c.nombre
+ORDER BY c.nombre asc;
